@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import MobileCollapsible from './MobileCollapsible'
 
 function GalleryPair({ beforeImage, afterImage, featured = false }) {
   return (
@@ -43,15 +44,17 @@ export default function BeforeAfterGallery({ items }) {
         />
       )}
       {rest.length > 0 && (
-        <div className="ba-gallery-grid">
-          {rest.map((item) => (
-            <GalleryPair
-              key={item.id}
-              beforeImage={item.beforeImage}
-              afterImage={item.afterImage}
-            />
-          ))}
-        </div>
+        <MobileCollapsible toggleLabel="További referenciák" collapseLabel="Kevesebb">
+          <div className="ba-gallery-grid">
+            {rest.map((item) => (
+              <GalleryPair
+                key={item.id}
+                beforeImage={item.beforeImage}
+                afterImage={item.afterImage}
+              />
+            ))}
+          </div>
+        </MobileCollapsible>
       )}
     </div>
   )
@@ -61,7 +64,7 @@ export function ServiceCardLink({ service, index, className = '' }) {
   return (
     <Link
       to={`/szolgaltatasok/${service.slug}`}
-      className={`card-luxury card-luxury-link p-8 md:p-10 group rounded-sm block ${className}`}
+      className={`card-luxury card-luxury-link p-6 md:p-10 group rounded-sm block ${className}`}
     >
       <div className="gold-line mb-6" />
       <span className="card-number mb-3 block">0{index + 1}</span>

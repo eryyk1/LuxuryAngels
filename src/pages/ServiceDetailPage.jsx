@@ -2,6 +2,7 @@ import { Link, useParams } from 'react-router-dom'
 import { getServiceBySlug, SERVICES } from '../data/content'
 import PageHero, { BookingCTA } from '../components/PageHero'
 import { ServicePricing } from '../components/ServicePricing'
+import MobileCollapsible from '../components/MobileCollapsible'
 import ServiceNotFound from './ServiceNotFound'
 
 export default function ServiceDetailPage() {
@@ -35,7 +36,7 @@ export default function ServiceDetailPage() {
       {/* Overview + accent */}
       <section className="section-padding px-4 sm:px-6 bg-gold-radial section-animate">
         <div className="max-w-6xl mx-auto">
-          <div className="grid lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+          <div className="grid lg:grid-cols-12 gap-6 md:gap-10 lg:gap-14 items-start">
             <div className={service.image ? 'lg:col-span-7' : 'lg:col-span-12 max-w-4xl mx-auto'}>
               <p className="section-label mb-4">Részletes leírás</p>
               <h2 className="font-serif text-3xl md:text-4xl text-text-primary mb-6 leading-tight">
@@ -47,7 +48,7 @@ export default function ServiceDetailPage() {
               )}
             </div>
             {service.image && (
-              <div className="lg:col-span-5">
+              <div className="hidden lg:block lg:col-span-5">
                 <div className="service-detail-accent" aria-hidden="true">
                   <div className="service-detail-accent-glow" />
                   <div className="service-detail-accent-pattern" />
@@ -65,23 +66,75 @@ export default function ServiceDetailPage() {
           </div>
 
           {service.forWho?.length > 0 && (
-            <div className="service-highlight-card rounded-sm mt-12 max-w-3xl">
-              <p className="section-label mb-4">Kinek ajánlom?</p>
-              <ul className="service-list">
-                {service.forWho.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            </div>
+            <MobileCollapsible toggleLabel="Kinek ajánlom?" collapseLabel="Kevesebb" className="mt-8 md:mt-12 max-w-3xl">
+              <div className="service-highlight-card rounded-sm">
+                <p className="section-label mb-4 hidden md:block">Kinek ajánlom?</p>
+                <ul className="service-list">
+                  {service.forWho.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+            </MobileCollapsible>
           )}
         </div>
       </section>
 
       <div className="section-divider mx-4 sm:mx-6" aria-hidden="true" />
 
-      {/* Includes */}
+      {(service.includes?.length > 0 || service.process?.length > 0 || service.benefits?.length > 0) && (
+        <section className="section-padding px-4 sm:px-6 section-animate md:hidden">
+          <div className="max-w-6xl mx-auto">
+            <MobileCollapsible toggleLabel="Szolgáltatás részletei" collapseLabel="Kevesebb">
+              {service.includes?.length > 0 && (
+                <div className="mb-8">
+                  <p className="section-label mb-3">Tartalom</p>
+                  <h3 className="font-serif text-xl text-text-primary mb-4">Mit tartalmaz a kezelés?</h3>
+                  <div className="grid gap-3">
+                    {service.includes.map((item) => (
+                      <div key={item} className="expertise-item">
+                        <span className="text-base text-text-primary">{item}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+              {service.process?.length > 0 && (
+                <div className="mb-8">
+                  <p className="section-label mb-3">Folyamat</p>
+                  <h3 className="font-serif text-xl text-text-primary mb-4">Hogyan zajlik?</h3>
+                  <div className="grid gap-4">
+                    {service.process.map((step) => (
+                      <article key={step.step} className="salon-exp-card rounded-sm">
+                        <span className="salon-exp-number">{step.step}</span>
+                        <h4 className="font-serif text-lg text-text-primary mb-2">{step.title}</h4>
+                        <p className="prose-luxury text-base">{step.desc}</p>
+                      </article>
+                    ))}
+                  </div>
+                </div>
+              )}
+              {service.benefits?.length > 0 && (
+                <div>
+                  <p className="section-label mb-3">Előnyök</p>
+                  <h3 className="font-serif text-xl text-text-primary mb-4">Miért érdemes?</h3>
+                  <div className="grid gap-3">
+                    {service.benefits.map((benefit) => (
+                      <div key={benefit} className="expertise-item">
+                        <span className="text-base text-text-primary">{benefit}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </MobileCollapsible>
+          </div>
+        </section>
+      )}
+
+      {/* Includes — desktop */}
       {service.includes?.length > 0 && (
-        <section className="section-padding px-4 sm:px-6 section-animate">
+        <section className="section-padding px-4 sm:px-6 section-animate hidden md:block">
           <div className="max-w-6xl mx-auto">
             <SectionBlock label="Tartalom" title="Mit tartalmaz a kezelés?" />
             <div className="grid sm:grid-cols-2 gap-4 max-w-3xl mx-auto">
@@ -95,11 +148,11 @@ export default function ServiceDetailPage() {
         </section>
       )}
 
-      {/* Process */}
+      {/* Process — desktop */}
       {service.process?.length > 0 && (
         <>
-          <div className="section-divider mx-4 sm:mx-6" aria-hidden="true" />
-          <section className="section-padding px-4 sm:px-6 bg-gold-soft section-animate">
+          <div className="section-divider mx-4 sm:mx-6 hidden md:block" aria-hidden="true" />
+          <section className="section-padding px-4 sm:px-6 bg-gold-soft section-animate hidden md:block">
             <div className="max-w-6xl mx-auto">
               <SectionBlock label="Folyamat" title="Hogyan zajlik?" />
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -116,11 +169,11 @@ export default function ServiceDetailPage() {
         </>
       )}
 
-      {/* Benefits */}
+      {/* Benefits — desktop */}
       {service.benefits?.length > 0 && (
         <>
-          <div className="section-divider mx-4 sm:mx-6" aria-hidden="true" />
-          <section className="section-padding px-4 sm:px-6 section-animate">
+          <div className="section-divider mx-4 sm:mx-6 hidden md:block" aria-hidden="true" />
+          <section className="section-padding px-4 sm:px-6 section-animate hidden md:block">
             <div className="max-w-6xl mx-auto">
               <SectionBlock label="Előnyök" title="Miért érdemes?" />
               <div className="grid sm:grid-cols-2 gap-4 max-w-4xl mx-auto">
@@ -165,8 +218,8 @@ export default function ServiceDetailPage() {
         </div>
       </section>
 
-      {/* Consultation CTA */}
-      <section className="section-padding px-4 sm:px-6 section-animate">
+      {/* Consultation CTA — desktop (mobile uses pricing + BookingCTA) */}
+      <section className="section-padding px-4 sm:px-6 section-animate hidden md:block">
         <div className="max-w-3xl mx-auto text-center">
           <p className="section-label mb-4">Konzultáció</p>
           <h2 className="font-serif text-3xl md:text-4xl text-text-primary mb-6">
@@ -184,23 +237,25 @@ export default function ServiceDetailPage() {
       {/* Other services */}
       <section className="section-padding px-4 sm:px-6 pb-16 section-animate">
         <div className="max-w-6xl mx-auto">
-          <p className="section-label text-center mb-8">További szolgáltatások</p>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {otherServices.map((s) => (
-              <Link
-                key={s.slug}
-                to={`/szolgaltatasok/${s.slug}`}
-                className="card-luxury card-luxury-link p-6 rounded-sm group block text-center"
-              >
-                <h3 className="font-serif text-lg text-text-primary group-hover:text-gold-rich transition-colors mb-2">
-                  {s.shortTitle}
-                </h3>
-                <span className="text-sm font-semibold tracking-[0.12em] uppercase text-gold-rich">
-                  Megtekintés →
-                </span>
-              </Link>
-            ))}
-          </div>
+          <p className="section-label text-center mb-6 md:mb-8">További szolgáltatások</p>
+          <MobileCollapsible toggleLabel="További szolgáltatások" collapseLabel="Kevesebb">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+              {otherServices.map((s) => (
+                <Link
+                  key={s.slug}
+                  to={`/szolgaltatasok/${s.slug}`}
+                  className="card-luxury card-luxury-link p-6 rounded-sm group block text-center"
+                >
+                  <h3 className="font-serif text-lg text-text-primary group-hover:text-gold-rich transition-colors mb-2">
+                    {s.shortTitle}
+                  </h3>
+                  <span className="text-sm font-semibold tracking-[0.12em] uppercase text-gold-rich">
+                    Megtekintés →
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </MobileCollapsible>
         </div>
       </section>
     </>

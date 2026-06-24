@@ -11,11 +11,12 @@ import SectionHeader from '../components/SectionHeader'
 import BeforeAfterGallery, { ServiceCardLink } from '../components/GalleryShowcase'
 import AboutPortrait from '../components/AboutPortrait'
 import ImagePlaceholder from '../components/ImagePlaceholder'
+import MobileCollapsible from '../components/MobileCollapsible'
 import PremiumBooking from '../components/PremiumBooking'
 
 function SectionOrnament() {
   return (
-    <div className="section-divider-ornament px-4 sm:px-6" aria-hidden="true">
+    <div className="section-divider-ornament px-4 sm:px-6 hidden md:flex" aria-hidden="true">
       <span className="section-divider-diamond" />
     </div>
   )
@@ -40,7 +41,7 @@ export default function HomePage() {
   return (
     <>
       {/* ── Hero ── */}
-      <section className="hero-gold relative min-h-[90svh] md:min-h-[92svh] flex items-center pt-[5.25rem] overflow-hidden">
+      <section className="hero-gold relative min-h-[75svh] md:min-h-[90svh] lg:min-h-[92svh] flex items-center pt-[5.25rem] overflow-hidden">
         <div className="hero-shimmer" aria-hidden="true" />
         <div className="hero-gold-frame hidden md:block" aria-hidden="true" />
         <div className="hero-gold-corner hero-gold-corner-tl hidden md:block" aria-hidden="true" />
@@ -48,19 +49,19 @@ export default function HomePage() {
         <div className="hero-gold-corner hero-gold-corner-bl hidden md:block" aria-hidden="true" />
         <div className="hero-gold-corner hero-gold-corner-br hidden md:block" aria-hidden="true" />
 
-        <div className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 py-14 md:py-16">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-14 xl:gap-16 items-center">
+        <div className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 py-10 md:py-14 lg:py-16">
+          <div className="grid lg:grid-cols-2 gap-8 md:gap-12 lg:gap-14 xl:gap-16 items-center">
             <div className="text-center lg:text-left section-animate">
               <p className="section-label mb-5">{SALON_TAGLINE}</p>
-              <h1 className="font-serif text-[2.5rem] sm:text-[3rem] lg:text-[3.5rem] font-normal leading-[1.06] mb-6 text-text-primary">
+              <h1 className="font-serif text-[2.125rem] sm:text-[3rem] lg:text-[3.5rem] font-normal leading-[1.06] mb-4 md:mb-6 text-text-primary">
                 A hajad,{' '}
                 <span className="text-gold-rich italic">újraélesztve</span>
               </h1>
-              <p className="prose-luxury max-w-md mx-auto lg:mx-0 mb-8 text-base md:text-lg">
+              <p className="prose-luxury max-w-md mx-auto lg:mx-0 mb-6 md:mb-8 text-base md:text-lg">
                 Hajhosszabítás, hajpótlás és személyre szabott ápolás — diszkrét, elegáns környezetben, {SALON_LOCATION}.
               </p>
 
-              <div className="trust-badge mb-8 mx-auto lg:mx-0 w-fit">
+              <div className="trust-badge mb-6 md:mb-8 mx-auto lg:mx-0 w-fit">
                 <span className="w-1.5 h-1.5 rounded-full bg-gold animate-pulse" />
                 Ingyenes első konzultáció
               </div>
@@ -73,7 +74,7 @@ export default function HomePage() {
               </div>
             </div>
 
-            <div className="flex justify-center lg:justify-end w-full mt-6 lg:mt-0 section-animate">
+            <div className="flex justify-center lg:justify-end w-full mt-2 md:mt-6 lg:mt-0 section-animate">
               <Logo variant="hero" />
             </div>
           </div>
@@ -81,7 +82,7 @@ export default function HomePage() {
       </section>
 
       {/* ── Quick trust strip ── */}
-      <section className="border-y border-gold/25 bg-gold-blush px-4 sm:px-6 py-14 section-animate gold-accent-top">
+      <section className="border-y border-gold/25 bg-gold-blush px-4 sm:px-6 py-8 md:py-14 section-animate gold-accent-top">
         <div className="max-w-5xl mx-auto grid sm:grid-cols-3 gap-6">
           {TRUST_STATS.slice(0, 3).map((item) => (
             <div key={item.label} className="stat-pill text-center rounded-sm">
@@ -97,7 +98,7 @@ export default function HomePage() {
       {/* ── About Polgár Hajnalka ── */}
       <section id="rolam" className="section-padding px-4 sm:px-6 about-section section-animate">
         <div className="max-w-6xl mx-auto">
-          <div className="grid lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+          <div className="grid lg:grid-cols-12 gap-6 md:gap-10 lg:gap-16 items-start">
             <div className="lg:col-span-5 mx-auto w-full max-w-md lg:max-w-none lg:sticky lg:top-28">
               <AboutPortrait />
             </div>
@@ -107,24 +108,54 @@ export default function HomePage() {
               <h2 className="section-title mb-3 text-left">{ABOUT.name}</h2>
               <p className="text-gold-rich font-medium text-lg mb-6 tracking-wide">{ABOUT.role}</p>
 
-              <div className="about-intro-card rounded-sm mb-8">
-                <p className="prose-luxury text-lg mb-5 leading-relaxed">{ABOUT.intro}</p>
-                <p className="prose-luxury leading-relaxed">{ABOUT.story}</p>
+              {/* Desktop layout — unchanged */}
+              <div className="hidden md:block">
+                <div className="about-intro-card rounded-sm mb-8">
+                  <p className="prose-luxury text-lg mb-5 leading-relaxed">{ABOUT.intro}</p>
+                  <p className="prose-luxury leading-relaxed">{ABOUT.story}</p>
+                </div>
+
+                <a href="#kapcsolat" className="btn-primary mb-10 inline-flex">
+                  Időpontot kérek
+                </a>
+
+                <div className="gold-line mb-6" />
+                <h3 className="font-serif text-2xl text-text-primary mb-6">Szakmai fókusz</h3>
+                <ul className="expertise-list">
+                  {ABOUT.expertise.map((item) => (
+                    <li key={item} className="expertise-item">
+                      <span className="text-base text-text-primary">{item}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
 
-              <a href="#kapcsolat" className="btn-primary mb-10 inline-flex">
-                Időpontot kérek
-              </a>
+              {/* Mobile layout — compact with read more */}
+              <div className="md:hidden">
+                <div className="about-intro-card rounded-sm mb-4">
+                  <p className="prose-luxury text-lg leading-relaxed">{ABOUT.intro}</p>
+                </div>
 
-              <div className="gold-line mb-6" />
-              <h3 className="font-serif text-2xl text-text-primary mb-6">Szakmai fókusz</h3>
-              <ul className="expertise-list">
-                {ABOUT.expertise.map((item) => (
-                  <li key={item} className="expertise-item">
-                    <span className="text-base text-text-primary">{item}</span>
-                  </li>
-                ))}
-              </ul>
+                <MobileCollapsible toggleLabel="Tovább olvasom" collapseLabel="Kevesebb">
+                  <div className="about-intro-card rounded-sm mb-6 mt-3">
+                    <p className="prose-luxury leading-relaxed">{ABOUT.story}</p>
+                  </div>
+
+                  <div className="gold-line mb-6" />
+                  <h3 className="font-serif text-2xl text-text-primary mb-6">Szakmai fókusz</h3>
+                  <ul className="expertise-list">
+                    {ABOUT.expertise.map((item) => (
+                      <li key={item} className="expertise-item">
+                        <span className="text-base text-text-primary">{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </MobileCollapsible>
+
+                <a href="#kapcsolat" className="btn-primary mb-6 inline-flex w-full justify-center">
+                  Időpontot kérek
+                </a>
+              </div>
             </div>
           </div>
         </div>
@@ -139,20 +170,30 @@ export default function HomePage() {
             label="Az élmény"
             title="Luxury Angels Salon"
           />
-          <p className="prose-luxury text-center max-w-2xl mx-auto -mt-8 mb-14 md:mb-16 text-lg">
-            Több mint szolgáltatás — egy gondosan megtervezett szépségélmény,
-            ahol minden részlet az Ön kényelmét és bizalmát szolgálja.
-          </p>
+          <MobileCollapsible
+            toggleLabel="Az élmény részletei"
+            collapseLabel="Kevesebb"
+            preview={
+              <p className="prose-luxury text-center max-w-2xl mx-auto text-base">
+                Több mint szolgáltatás — gondosan megtervezett szépségélmény, prémium környezetben.
+              </p>
+            }
+          >
+            <p className="prose-luxury text-center max-w-2xl mx-auto mb-8 md:-mt-8 md:mb-14 lg:mb-16 text-lg">
+              Több mint szolgáltatás — egy gondosan megtervezett szépségélmény,
+              ahol minden részlet az Ön kényelmét és bizalmát szolgálja.
+            </p>
 
-          <div className="grid sm:grid-cols-2 gap-6 lg:gap-8">
-            {SALON_EXPERIENCE.map((item) => (
-              <article key={item.number} className="salon-exp-card rounded-sm">
-                <span className="salon-exp-number">{item.number}</span>
-                <h3 className="font-serif text-2xl text-text-primary mb-3">{item.title}</h3>
-                <p className="prose-luxury">{item.desc}</p>
-              </article>
-            ))}
-          </div>
+            <div className="grid sm:grid-cols-2 gap-6 lg:gap-8">
+              {SALON_EXPERIENCE.map((item) => (
+                <article key={item.number} className="salon-exp-card rounded-sm">
+                  <span className="salon-exp-number">{item.number}</span>
+                  <h3 className="font-serif text-2xl text-text-primary mb-3">{item.title}</h3>
+                  <p className="prose-luxury">{item.desc}</p>
+                </article>
+              ))}
+            </div>
+          </MobileCollapsible>
         </div>
       </section>
 
@@ -162,7 +203,7 @@ export default function HomePage() {
       <section className="section-padding px-4 sm:px-6 bg-gold-radial section-animate">
         <div className="max-w-6xl mx-auto">
           <SectionHeader label="Amit kínálok" title="Szolgáltatások" />
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 mb-12">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6 lg:gap-8 mb-8 md:mb-12">
             {SERVICES.slice(0, 3).map((s, i) => (
               <ServiceCardLink key={s.slug} service={s} index={i} />
             ))}
@@ -173,8 +214,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── Trust & Authority ── */}
-      <section className="section-padding px-4 sm:px-6 section-animate">
+      {/* ── Trust & Authority (desktop) ── */}
+      <section className="section-padding px-4 sm:px-6 section-animate hidden md:block">
         <div className="max-w-6xl mx-auto">
           <SectionHeader label="Bizalom & minőség" title="Miért bíznak bennem?" />
 
@@ -241,7 +282,32 @@ export default function HomePage() {
       <section className="section-padding px-4 sm:px-6 section-animate">
         <div className="max-w-5xl mx-auto">
           <SectionHeader label="Vendégeim mondták" title="Vélemények" />
-          <div className="grid md:grid-cols-3 gap-10 lg:gap-12">
+
+          <div className="md:hidden">
+            <blockquote className="card-luxury p-6 rounded-sm relative mb-2">
+              <div className="absolute top-0 left-8 w-10 h-0.5 bg-gradient-to-r from-gold-rich to-gold-light" />
+              <p className="font-serif text-lg italic text-text-primary leading-relaxed mb-6 pt-4">
+                „{TESTIMONIALS[0].text}"
+              </p>
+              <footer className="testimonial-author">— {TESTIMONIALS[0].name}</footer>
+            </blockquote>
+
+            <MobileCollapsible toggleLabel="További vélemények" collapseLabel="Kevesebb">
+              <div className="grid gap-6 mt-4">
+                {TESTIMONIALS.slice(1).map((t) => (
+                  <blockquote key={t.name} className="card-luxury p-6 rounded-sm relative">
+                    <div className="absolute top-0 left-8 w-10 h-0.5 bg-gradient-to-r from-gold-rich to-gold-light" />
+                    <p className="font-serif text-lg italic text-text-primary leading-relaxed mb-6 pt-4">
+                      „{t.text}"
+                    </p>
+                    <footer className="testimonial-author">— {t.name}</footer>
+                  </blockquote>
+                ))}
+              </div>
+            </MobileCollapsible>
+          </div>
+
+          <div className="hidden md:grid md:grid-cols-3 gap-10 lg:gap-12">
             {TESTIMONIALS.map((t) => (
               <blockquote key={t.name} className="card-luxury p-8 rounded-sm relative">
                 <div className="absolute top-0 left-8 w-10 h-0.5 bg-gradient-to-r from-gold-rich to-gold-light" />
@@ -260,11 +326,11 @@ export default function HomePage() {
 
       {/* ── Contact ── */}
       <section id="kapcsolat" className="section-padding contact-section px-4 sm:px-6 section-animate">
-        <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-10 lg:gap-14 relative z-10">
+        <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-8 md:gap-10 lg:gap-14 relative z-10">
           <div className="text-pearl lg:pr-4">
             <p className="section-label section-label-light mb-4">Kapcsolat</p>
-            <h2 className="font-serif text-3xl md:text-[2.75rem] font-normal mb-8 text-pearl">Időpontkérés</h2>
-            <p className="text-pearl/90 leading-relaxed mb-10 text-base md:text-lg">
+            <h2 className="font-serif text-3xl md:text-[2.75rem] font-normal mb-5 md:mb-8 text-pearl">Időpontkérés</h2>
+            <p className="text-pearl/90 leading-relaxed mb-6 md:mb-10 text-base md:text-lg">
               Írj nekem, és 24 órán belül visszajelzek a szabad időpontokkal.
               Az első konzultáció ingyenes — beszéljük meg, mit szeretnél elérni.
             </p>

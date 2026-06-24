@@ -16,7 +16,7 @@ export default function ServicesPage() {
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
             {SERVICES.map((s, i) => (
-              <ServiceCardLink key={s.slug} service={s} index={i} className="p-10 md:p-12" />
+              <ServiceCardLink key={s.slug} service={s} index={i} className="p-6 md:p-10 lg:p-12" />
             ))}
           </div>
 

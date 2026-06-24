@@ -3,7 +3,7 @@ import SectionHeader from './SectionHeader'
 
 export default function PageHero({ label, title, description }) {
   return (
-    <section className="page-hero pt-28 md:pt-32 pb-16 md:pb-20 px-6 relative overflow-hidden">
+    <section className="page-hero pt-24 md:pt-32 pb-12 md:pb-20 px-6 relative overflow-hidden">
       <div className="hero-shimmer" aria-hidden="true" />
       <div className="relative z-10 max-w-3xl mx-auto text-center">
         <SectionHeader label={label} title={title} light />
@@ -19,8 +19,8 @@ export default function PageHero({ label, title, description }) {
 
 export function BookingCTA({ className = '' }) {
   return (
-    <section className={`px-6 py-16 md:py-20 section-animate ${className}`}>
-      <div className="max-w-4xl mx-auto text-center booking-cta-strip rounded-sm px-8 py-12 md:py-14 relative z-10">
+    <section className={`px-6 py-10 md:py-20 section-animate ${className}`}>
+      <div className="max-w-4xl mx-auto text-center booking-cta-strip rounded-sm px-6 py-10 md:px-8 md:py-14 relative z-10">
         <p className="section-label mb-4">Ingyenes konzultáció</p>
         <h2 className="font-serif text-2xl md:text-[2rem] text-text-primary mb-4">
           Foglald le időpontodat

@@ -1,6 +1,6 @@
 export default function SectionHeader({ label, title, light = false, className = '' }) {
   return (
-    <div className={`text-center mb-14 md:mb-16 section-animate ${className}`}>
+    <div className={`section-header text-center mb-14 md:mb-16 section-animate ${className}`}>
       {label && (
         <p className={`section-label mb-4 ${light ? 'section-label-light' : ''}`}>{label}</p>
       )}
