@@ -24,12 +24,13 @@ export default function AppointmentForm() {
     email: '',
     phone: '',
     service: getInitialService(),
+    preferred_date: '',
+    preferred_time: '',
     message: '',
   }))
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState('')
   const [submitted, setSubmitted] = useState(false)
-  const [emailSent, setEmailSent] = useState(true)
 
   const handleChange = (field) => (event) => {
     setForm((current) => ({ ...current, [field]: event.target.value }))
@@ -42,11 +43,13 @@ export default function AppointmentForm() {
     setError('')
 
     try {
-      const result = await submitAppointmentRequest(form)
-      setEmailSent(result.emailSent !== false)
+      await submitAppointmentRequest(form)
       setSubmitted(true)
     } catch (err) {
-      setError(err.message || 'Hiba történt a küldés során.')
+      setError(
+        err.message
+          || 'Hiba történt az időpontkérés elküldése közben. Kérlek próbáld újra később.',
+      )
     } finally {
       setSubmitting(false)
     }
@@ -56,19 +59,12 @@ export default function AppointmentForm() {
     return (
       <div className="contact-card flex items-center justify-center p-10 md:p-12 text-center rounded-sm">
         <div>
-          <p className="font-serif text-2xl md:text-3xl text-gold-rich mb-3">Köszönöm!</p>
-          <p className="prose-luxury mb-3">
-            Időpontkérését rögzítettük. Hamarosan felveszem Önnel a kapcsolatot.
+          <p className="font-serif text-2xl md:text-3xl text-gold-rich mb-3">
+            Köszönöm az időpontkérésed!
           </p>
-          {emailSent ? (
-            <p className="text-sm text-text-soft">
-              Megerősítő e-mailt küldtünk a megadott címre.
-            </p>
-          ) : (
-            <p className="text-sm text-text-soft">
-              A kérés mentve, de az e-mail küldés sikertelen volt. Telefonon vagy e-mailben jelentkezünk.
-            </p>
-          )}
+          <p className="prose-luxury">
+            24 órán belül felveszem veled a kapcsolatot a szabad időpontok egyeztetése érdekében.
+          </p>
         </div>
       </div>
     )
@@ -122,6 +118,24 @@ export default function AppointmentForm() {
           </option>
         ))}
       </select>
+      <div className="grid sm:grid-cols-2 gap-4">
+        <input
+          type="date"
+          name="preferred_date"
+          placeholder="Preferált dátum"
+          value={form.preferred_date}
+          onChange={handleChange('preferred_date')}
+          className="input-gold"
+        />
+        <input
+          type="time"
+          name="preferred_time"
+          placeholder="Preferált időpont"
+          value={form.preferred_time}
+          onChange={handleChange('preferred_time')}
+          className="input-gold"
+        />
+      </div>
       <textarea
         name="message"
         placeholder="Üzenet / kérés részletei (opcionális)"
