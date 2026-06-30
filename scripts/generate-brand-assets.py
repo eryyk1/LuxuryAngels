@@ -80,10 +80,10 @@ def make_og_image(logo: Image.Image) -> Image.Image:
     url_font = load_font(26, bold=False)
 
     cx = width // 2
-    draw.text((cx, 430), "Luxury Angels", font=title_font, fill=TEXT_DARK, anchor="mm")
+    draw.text((cx, 430), "PH Luxury Angels Salon", font=title_font, fill=TEXT_DARK, anchor="mm")
     draw.text(
         (cx, 485),
-        "Hair Extensions & Hair Styling",
+        "Prémium hajhosszabbítás és fodrász szolgáltatások",
         font=subtitle_font,
         fill=TEXT_MUTED,
         anchor="mm",
