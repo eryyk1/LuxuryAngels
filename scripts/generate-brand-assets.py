@@ -1,19 +1,22 @@
-"""Generate favicon PNG sizes and og-image.png for Luxury Angels."""
+"""Generate favicon PNG sizes and og-image.png from the official site logo."""
 
+import base64
+import io
 from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFont
 
 ROOT = Path(__file__).resolve().parents[1]
 PUBLIC = ROOT / "public"
+LOGO_PATH = ROOT / "src" / "assets" / "logo.png"
 
-BG_DARK = (26, 21, 16)
-GOLD_LIGHT = (226, 200, 138)
 GOLD_MID = (196, 160, 98)
 GOLD_DARK = (143, 111, 56)
-CHAMPAGNE = (221, 208, 184)
-CREAM = (228, 214, 192)
+CHAMPAGNE_TOP = (236, 226, 206)
+CHAMPAGNE_BOTTOM = (204, 186, 158)
 TEXT_DARK = (47, 40, 32)
+TEXT_MUTED = (85, 74, 58)
+BG_DARK = (26, 21, 16)
 
 
 def load_font(size: int, bold: bool = False):
@@ -31,25 +34,10 @@ def load_font(size: int, bold: bool = False):
     return ImageFont.load_default()
 
 
-def draw_ph_monogram(draw: ImageDraw.ImageDraw, box: tuple[int, int, int, int], font):
-    x0, y0, x1, y1 = box
-    cx = (x0 + x1) // 2
-    cy = (y0 + y1) // 2 + int((y1 - y0) * 0.04)
-    draw.text((cx, cy), "PH", font=font, fill=GOLD_MID, anchor="mm")
-    # subtle highlight stroke effect via offset lighter text
-    draw.text((cx, cy - 1), "PH", font=font, fill=GOLD_LIGHT, anchor="mm")
-
-
-def make_favicon(size: int) -> Image.Image:
-    img = Image.new("RGBA", (size, size), (*BG_DARK, 255))
-    draw = ImageDraw.Draw(img)
-    radius = max(4, size // 8)
-    draw.rounded_rectangle((0, 0, size - 1, size - 1), radius=radius, fill=BG_DARK)
-    padding = int(size * 0.12)
-    font_size = max(12, int(size * 0.42))
-    font = load_font(font_size, bold=True)
-    draw_ph_monogram(draw, (padding, padding, size - padding, size - padding), font)
-    return img
+def load_logo() -> Image.Image:
+    if not LOGO_PATH.exists():
+        raise FileNotFoundError(f"Official logo not found: {LOGO_PATH}")
+    return Image.open(LOGO_PATH).convert("RGBA")
 
 
 def vertical_gradient(size: tuple[int, int], top, bottom):
@@ -63,48 +51,77 @@ def vertical_gradient(size: tuple[int, int], top, bottom):
     return img
 
 
-def make_og_image() -> Image.Image:
+def paste_logo_centered(base: Image.Image, logo: Image.Image, max_width: int, y_center: int | None = None):
+    ratio = max_width / logo.width
+    new_size = (max_width, int(logo.height * ratio))
+    resized = logo.resize(new_size, Image.Resampling.LANCZOS)
+    x = (base.width - new_size[0]) // 2
+    y = y_center - new_size[1] // 2 if y_center is not None else (base.height - new_size[1]) // 2
+    base.paste(resized, (x, y), resized)
+
+
+def make_og_image(logo: Image.Image) -> Image.Image:
     width, height = 1200, 630
-    img = vertical_gradient((width, height), (236, 226, 206), (204, 186, 158))
+    img = vertical_gradient((width, height), CHAMPAGNE_TOP, CHAMPAGNE_BOTTOM)
     draw = ImageDraw.Draw(img)
 
-    # decorative frame
     inset = 48
     draw.rounded_rectangle(
-        (inset, inset, width - inset, height - inset),
+        (inset, inset, width - inset - 1, height - inset - 1),
         radius=18,
         outline=GOLD_MID,
         width=3,
     )
 
-    # gold line accents
-    draw.line((inset + 80, 150, width - inset - 80, 150), fill=GOLD_DARK, width=2)
-    draw.line((inset + 80, height - 150, width - inset - 80, height - 150), fill=GOLD_DARK, width=2)
+    paste_logo_centered(img, logo, max_width=620, y_center=250)
 
-    monogram_font = load_font(120, bold=True)
-    title_font = load_font(72, bold=True)
-    subtitle_font = load_font(34, bold=False)
-    url_font = load_font(30, bold=False)
+    title_font = load_font(42, bold=True)
+    subtitle_font = load_font(28, bold=False)
+    url_font = load_font(26, bold=False)
 
-    cx, cy = width // 2, 190
-    draw.text((cx, cy), "PH", font=monogram_font, fill=GOLD_MID, anchor="mm")
-    draw.text((cx, cy - 2), "PH", font=monogram_font, fill=GOLD_LIGHT, anchor="mm")
-
-    draw.text((cx, 300), "Luxury Angels", font=title_font, fill=TEXT_DARK, anchor="mm")
+    cx = width // 2
+    draw.text((cx, 430), "Luxury Angels", font=title_font, fill=TEXT_DARK, anchor="mm")
     draw.text(
-        (cx, 375),
+        (cx, 485),
         "Hair Extensions & Hair Styling",
         font=subtitle_font,
-        fill=(85, 74, 58),
+        fill=TEXT_MUTED,
         anchor="mm",
     )
-    draw.text((cx, height - 120), "luxuryangels.hu", font=url_font, fill=GOLD_DARK, anchor="mm")
+    draw.text((cx, height - 72), "luxuryangels.hu", font=url_font, fill=GOLD_DARK, anchor="mm")
 
     return img
 
 
+def make_favicon(logo: Image.Image, size: int) -> Image.Image:
+    canvas = Image.new("RGBA", (size, size), (*BG_DARK, 255))
+    draw = ImageDraw.Draw(canvas)
+    radius = max(4, size // 8)
+    draw.rounded_rectangle((0, 0, size - 1, size - 1), radius=radius, fill=BG_DARK)
+
+    padding = int(size * 0.14)
+    max_logo_width = size - padding * 2
+    ratio = max_logo_width / logo.width
+    new_size = (max_logo_width, int(logo.height * ratio))
+    resized = logo.resize(new_size, Image.Resampling.LANCZOS)
+    x = (size - new_size[0]) // 2
+    y = (size - new_size[1]) // 2
+    canvas.paste(resized, (x, y), resized)
+    return canvas
+
+
+def make_favicon_svg(png_bytes: bytes) -> str:
+    encoded = base64.b64encode(png_bytes).decode("ascii")
+    return (
+        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">'
+        f'<image href="data:image/png;base64,{encoded}" width="48" height="48"/>'
+        "</svg>"
+    )
+
+
 def main():
     PUBLIC.mkdir(parents=True, exist_ok=True)
+    logo = load_logo()
 
     sizes = {
         "favicon-32.png": 32,
@@ -114,11 +131,18 @@ def main():
         "icon-512.png": 512,
     }
 
-    for name, size in sizes.items():
-        make_favicon(size).save(PUBLIC / name, format="PNG", optimize=True)
+    favicon_48_buffer = io.BytesIO()
+    make_favicon(logo, 48).save(favicon_48_buffer, format="PNG", optimize=True)
+    (PUBLIC / "favicon.svg").write_text(
+        make_favicon_svg(favicon_48_buffer.getvalue()),
+        encoding="utf-8",
+    )
 
-    make_og_image().save(PUBLIC / "og-image.png", format="PNG", optimize=True)
-    print("Generated brand assets in public/")
+    for name, size in sizes.items():
+        make_favicon(logo, size).save(PUBLIC / name, format="PNG", optimize=True)
+
+    make_og_image(logo).save(PUBLIC / "og-image.png", format="PNG", optimize=True)
+    print(f"Generated brand assets from {LOGO_PATH.name}")
 
 
 if __name__ == "__main__":
