@@ -2,6 +2,7 @@ import { Link, useParams } from 'react-router-dom'
 import { getServiceBySlug, SERVICES } from '../data/content'
 import PageHero, { BookingCTA } from '../components/PageHero'
 import { ServicePricing } from '../components/ServicePricing'
+import PricingInfoAccordion from '../components/PricingInfoAccordion'
 import MobileCollapsible from '../components/MobileCollapsible'
 import ServiceNotFound from './ServiceNotFound'
 
@@ -49,18 +50,29 @@ export default function ServiceDetailPage() {
             </div>
             {service.image && (
               <div className="hidden lg:block lg:col-span-5">
-                <div className="service-detail-accent" aria-hidden="true">
-                  <div className="service-detail-accent-glow" />
-                  <div className="service-detail-accent-pattern" />
-                  <div className="service-detail-accent-inner">
-                    <span className="service-detail-accent-icon">✦</span>
-                    <div className="divider-gold my-6 mx-auto w-16" />
-                    <p className="font-serif text-xl md:text-2xl text-gold-rich text-center px-6 leading-snug">
-                      {service.shortTitle}
-                    </p>
-                    <div className="service-detail-accent-sparkle" />
+                {service.slug === 'hosszabbitas' ? (
+                  <div className="service-detail-image-wrap">
+                    <img
+                      src={service.image}
+                      alt={service.title}
+                      className="service-detail-image"
+                      loading="lazy"
+                    />
                   </div>
-                </div>
+                ) : (
+                  <div className="service-detail-accent" aria-hidden="true">
+                    <div className="service-detail-accent-glow" />
+                    <div className="service-detail-accent-pattern" />
+                    <div className="service-detail-accent-inner">
+                      <span className="service-detail-accent-icon">✦</span>
+                      <div className="divider-gold my-6 mx-auto w-16" />
+                      <p className="font-serif text-xl md:text-2xl text-gold-rich text-center px-6 leading-snug">
+                        {service.shortTitle}
+                      </p>
+                      <div className="service-detail-accent-sparkle" />
+                    </div>
+                  </div>
+                )}
               </div>
             )}
           </div>
@@ -192,6 +204,9 @@ export default function ServiceDetailPage() {
       <section className="section-padding px-4 sm:px-6 bg-gold-blush section-animate">
         <div className="max-w-6xl mx-auto">
           <SectionBlock label="Árak" title="Árlista" />
+          {service.pricingInfoIntro && service.pricingInfoFull && (
+            <PricingInfoAccordion intro={service.pricingInfoIntro} full={service.pricingInfoFull} />
+          )}
           {hasPricingTable ? (
             <ServicePricing sections={pricingSections} notes={pricingNotes} />
           ) : (

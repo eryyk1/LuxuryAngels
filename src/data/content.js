@@ -23,10 +23,12 @@ export const SERVICES = [
     slug: 'hosszabbitas',
     title: 'Hajhosszabbítás / póthaj felrakás nanogyűrűvel',
     shortTitle: 'Hajhosszabbítás nanogyűrűvel',
-    image: '/photos/services/services1.jpg',
+    image: '/photos/nanogyuru1.jpg',
     desc: 'Természetes hatású hosszabbítás és volumennövelés prémium póthajjal, nanogyűrűs technikával.',
     overview:
-      'A hajhosszabbítás nanogyűrűs felrakással finom, természetes eredményt ad — a póthaj színe és textúrája illeszkedik a saját hajához. Minden vendég egyedi konzultációval kezdődik, ahol meghatározzuk a szükséges gramm mennyiséget, hosszt és technikát. A szalon minőségű póthajat biztosít — hozott hajjal nem dolgozom.',
+      'A hajhosszabbítás nanogyűrűs felrakással finom, természetes eredményt ad — a póthaj színe és textúrája illeszkedik a saját hajához. Minden vendég egyedi konzultációval kezdődik, ahol meghatározzuk a szükséges gramm mennyiséget, hosszt és technikát. A szalon minőségű póthajat is biztosít.',
+    detail:
+      'Hozott póthajjal is vállalok munkát, azonban ebben az esetben garanciát nem tudok biztosítani. Mivel a tincsek előkészítését nem én végzem, azok minőségéért és esetleges hullásáért felelősséget nem tudok vállalni.',
     forWho: [
       'Akik természetes hosszabbítást szeretnének nanogyűrűs technikával',
       'Akik volument vagy hosszúságot szeretnének hozzáadni',
@@ -66,9 +68,12 @@ export const SERVICES = [
         ],
       },
     ],
+    pricingInfoIntro:
+      'Fontos tudnivalók a szükséges póthaj mennyiség kiválasztása előtt…',
+    pricingInfoFull:
+      'A nano gyűrűs hajhosszabbítás egyik legfontosabb alapja a megfelelő mennyiségű póthaj kiválasztása a vendég saját hajának sűrűségéhez és teherbírásához igazítva.\n\nA cél nem csupán a hossz vagy a dúsítás elérése, hanem az is, hogy a saját haj egészséges maradjon, ne nehezedjen el, és a hajhosszabbítás alatt is zavartalanul tudjon növekedni, megőrizve természetes sűrűségét.\n\nA tökéletes végeredményhez elengedhetetlen a precíz leválasztás, a megfelelő elosztás, valamint a takaróhajak gondos figyelembevétele.\n\nEzek azok a szakmai részletek, amelyek biztosítják, hogy a hajhosszabbítás diszkrét, kényelmes viseletű és természetes hatású legyen hosszú távon is.',
     pricingNotes: [
       'Személyre szabott árajánlat konzultáció után.',
-      'Hozott hajjal nem dolgozik.',
       'Az árak forintban értendők.',
     ],
     consultation:
@@ -127,7 +132,7 @@ export const SERVICES = [
     ],
     pricingNotes: [
       'Az árak forintban értendők.',
-      'Hozott hajjal nem dolgozik.',
+      'Hozott póthajjal is vállalok munkát, azonban ebben az esetben garanciát nem tudok biztosítani. Mivel a tincsek előkészítését nem én végzem, azok minőségéért és esetleges hullásáért felelősséget nem tudok vállalni.',
       'Személyre szabott árajánlat konzultáció után.',
     ],
     consultation:
@@ -282,9 +287,9 @@ export function getServiceBySlug(slug) {
 }
 
 export const GALLERY = [
-  { id: 1, beforeImage: '/photos/before1.jpg', afterImage: '/photos/after1.jpg' },
-  { id: 2, beforeImage: '/photos/before2.jpg', afterImage: '/photos/after2.jpg' },
-  { id: 3, beforeImage: '/photos/before3.jpg', afterImage: '/photos/after3.jpg' },
+  { id: 1, beforeImage: '/photos/before10.jpg', afterImage: '/photos/after10.jpg' },
+  { id: 2, beforeImage: '/photos/before11.jpg', afterImage: '/photos/after11.jpg' },
+  { id: 3, beforeImage: '/photos/before12.jpg', afterImage: '/photos/after12.jpg' },
 ]
 
 export const WHY = [

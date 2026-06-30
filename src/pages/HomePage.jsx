@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import {
   SERVICES, PRODUCTS, TESTIMONIALS, GALLERY,
@@ -13,6 +12,7 @@ import AboutPortrait from '../components/AboutPortrait'
 import ImagePlaceholder from '../components/ImagePlaceholder'
 import MobileCollapsible from '../components/MobileCollapsible'
 import PremiumBooking from '../components/PremiumBooking'
+import AppointmentForm from '../components/AppointmentForm'
 
 function SectionOrnament() {
   return (
@@ -23,21 +23,6 @@ function SectionOrnament() {
 }
 
 export default function HomePage() {
-  const [form, setForm] = useState(() => {
-    const product = sessionStorage.getItem('inquiryProduct')
-    if (product) {
-      sessionStorage.removeItem('inquiryProduct')
-      return { name: '', email: '', phone: '', message: `Érdekel: ${product}` }
-    }
-    return { name: '', email: '', phone: '', message: '' }
-  })
-  const [submitted, setSubmitted] = useState(false)
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    setSubmitted(true)
-  }
-
   return (
     <>
       {/* ── Hero ── */}
@@ -331,8 +316,7 @@ export default function HomePage() {
             <p className="section-label section-label-light mb-4">Kapcsolat</p>
             <h2 className="font-serif text-3xl md:text-[2.75rem] font-normal mb-5 md:mb-8 text-pearl">Időpontkérés</h2>
             <p className="text-pearl/90 leading-relaxed mb-6 md:mb-10 text-base md:text-lg">
-              Írj nekem, és 24 órán belül visszajelzek a szabad időpontokkal.
-              Az első konzultáció ingyenes — beszéljük meg, mit szeretnél elérni.
+              Írj nekem, és 24 órán belül visszajelzek a szabad időpontokkal. Az első konzultáció ingyenes, ahol átbeszéljük az elképzeléseidet, hogy együtt megalkothassuk álmaid haját.
             </p>
             <ul className="space-y-5">
               <li>
@@ -354,36 +338,7 @@ export default function HomePage() {
             </ul>
           </div>
 
-          {submitted ? (
-            <div className="contact-card flex items-center justify-center p-12 text-center rounded-sm">
-              <div>
-                <p className="font-serif text-2xl md:text-3xl text-gold-rich mb-3">Köszönöm!</p>
-                <p className="prose-luxury">Hamarosan felveszem Önnel a kapcsolatot.</p>
-              </div>
-            </div>
-          ) : (
-            <form onSubmit={handleSubmit} className="contact-card p-8 md:p-10 space-y-4 rounded-sm">
-              {['name', 'email', 'phone'].map((field) => (
-                <input
-                  key={field}
-                  type={field === 'email' ? 'email' : field === 'phone' ? 'tel' : 'text'}
-                  placeholder={field === 'name' ? 'Név' : field === 'email' ? 'E-mail' : 'Telefonszám'}
-                  required={field !== 'phone'}
-                  value={form[field]}
-                  onChange={(e) => setForm({ ...form, [field]: e.target.value })}
-                  className="input-gold"
-                />
-              ))}
-              <textarea
-                placeholder="Üzenet — milyen szolgáltatás érdekel?"
-                rows={4}
-                value={form.message}
-                onChange={(e) => setForm({ ...form, message: e.target.value })}
-                className="input-gold resize-none"
-              />
-              <button type="submit" className="btn-primary w-full">Üzenet küldése</button>
-            </form>
-          )}
+          <AppointmentForm />
         </div>
       </section>
     </>
