@@ -1,10 +1,13 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { PRODUCTS } from '../data/content'
+import { PAGE_SEO, buildBreadcrumbSchema } from '../data/seo'
 import PageHero, { BookingCTA } from '../components/PageHero'
+import PageMeta from '../components/PageMeta'
 import ImagePlaceholder from '../components/ImagePlaceholder'
 
 export default function ProductsPage() {
   const navigate = useNavigate()
+  const seo = PAGE_SEO.products
 
   const inquire = (productName) => {
     sessionStorage.setItem('inquiryProduct', productName)
@@ -13,6 +16,18 @@ export default function ProductsPage() {
 
   return (
     <>
+      <PageMeta
+        title={seo.title}
+        description={seo.description}
+        path={seo.path}
+        jsonLd={[
+          buildBreadcrumbSchema([
+            { name: 'Főoldal', path: '/' },
+            { name: 'Termékek', path: '/termekek' },
+          ]),
+        ]}
+      />
+
       <PageHero
         label="Otthoni ápolás"
         title="Kiemelt termékek"

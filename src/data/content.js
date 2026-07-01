@@ -13,6 +13,7 @@ export const PRODUCTS_UI_ENABLED = false
 export const NAV = [
   { label: 'Rólam', to: '/#rolam' },
   { label: 'Szolgáltatások', to: '/szolgaltatasok' },
+  { label: 'Tanfolyam', to: '/tanfolyam' },
   { label: 'Referenciák', to: '/#referenciak' },
   { label: 'Termékek', to: '/termekek' },
   { label: 'Kapcsolat', to: '/#kapcsolat' },
@@ -287,9 +288,27 @@ export function getServiceBySlug(slug) {
 }
 
 export const GALLERY = [
-  { id: 1, beforeImage: '/photos/before10.jpg', afterImage: '/photos/after10.jpg' },
-  { id: 2, beforeImage: '/photos/before11.jpg', afterImage: '/photos/after11.jpg' },
-  { id: 3, beforeImage: '/photos/before12.jpg', afterImage: '/photos/after12.jpg' },
+  {
+    id: 1,
+    beforeImage: '/photos/before10.jpg',
+    afterImage: '/photos/after10.jpg',
+    beforeAlt: 'Hajhosszabbítás előtt — természetes rövid haj, PH Luxury Angels Salon Budapest',
+    afterAlt: 'Nano gyűrűs hajhosszabbítás után — hosszabb, dúsabb haj, Luxury Angels Salon',
+  },
+  {
+    id: 2,
+    beforeImage: '/photos/before11.jpg',
+    afterImage: '/photos/after11.jpg',
+    beforeAlt: 'Hajdúsítás előtt — vékonyabb hajkorona referencia fotó, Budapest XVIII. kerület',
+    afterAlt: 'Hajdúsítás és hajhosszabbítás után — volumenesebb eredmény, PH Luxury Angels Salon',
+  },
+  {
+    id: 3,
+    beforeImage: '/photos/before12.jpg',
+    afterImage: '/photos/after12.jpg',
+    beforeAlt: 'Póthaj felrakás előtt — eredeti hajhossz referencia, Luxury Angels Salon',
+    afterAlt: 'Póthaj és hőillesztés után — természetes hosszabbítás eredménye, Budapest',
+  },
 ]
 
 export const WHY = [

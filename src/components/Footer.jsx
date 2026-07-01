@@ -2,6 +2,13 @@ import { Link } from 'react-router-dom'
 import { SALON_NAME, PHONE, PHONE_DISPLAY, ADDRESS, MAPS_URL, FACEBOOK_URL } from '../data/content'
 import Logo from './Logo'
 
+const FOOTER_NAV = [
+  { label: 'Szolgáltatások', to: '/szolgaltatasok' },
+  { label: 'Hajhosszabbító képzés', to: '/tanfolyam' },
+  { label: 'Referenciák', to: '/#referenciak' },
+  { label: 'Kapcsolat', to: '/#kapcsolat' },
+]
+
 export default function Footer() {
   return (
     <footer className="site-footer">
@@ -14,6 +21,17 @@ export default function Footer() {
           </div>
 
           <div className="space-y-4 footer-links">
+            <nav aria-label="Oldaltérkép">
+              <ul className="space-y-2 mb-4">
+                {FOOTER_NAV.map((item) => (
+                  <li key={item.to}>
+                    <Link to={item.to} className="footer-link">
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
             <p>
               <a href={MAPS_URL} target="_blank" rel="noopener noreferrer" className="footer-link">
                 {ADDRESS}

@@ -1,6 +1,12 @@
 import { Link, useParams } from 'react-router-dom'
 import { getServiceBySlug, SERVICES } from '../data/content'
+import {
+  buildBreadcrumbSchema,
+  buildServiceSchema,
+  getServiceSeo,
+} from '../data/seo'
 import PageHero, { BookingCTA } from '../components/PageHero'
+import PageMeta from '../components/PageMeta'
 import { ServicePricing } from '../components/ServicePricing'
 import PricingInfoAccordion from '../components/PricingInfoAccordion'
 import MobileCollapsible from '../components/MobileCollapsible'
@@ -18,9 +24,24 @@ export default function ServiceDetailPage() {
   const pricingSections = service.pricingSections ?? []
   const pricingNotes = service.pricingNotes ?? []
   const hasPricingTable = pricingSections.some((s) => s.rows?.length > 0)
+  const seo = getServiceSeo(service.slug)
 
   return (
     <>
+      <PageMeta
+        title={seo.title}
+        description={seo.description}
+        path={seo.path}
+        jsonLd={[
+          buildBreadcrumbSchema([
+            { name: 'Főoldal', path: '/' },
+            { name: 'Szolgáltatások', path: '/szolgaltatasok' },
+            { name: service.shortTitle, path: seo.path },
+          ]),
+          buildServiceSchema(service),
+        ]}
+      />
+
       <PageHero
         label="Szolgáltatás"
         title={service.title}
@@ -54,9 +75,10 @@ export default function ServiceDetailPage() {
                   <div className="service-detail-image-wrap">
                     <img
                       src={service.image}
-                      alt={service.title}
+                      alt={`${service.shortTitle} — PH Luxury Angels Salon, hajhosszabbítás Budapest XVIII. kerület`}
                       className="service-detail-image"
                       loading="lazy"
+                      decoding="async"
                     />
                   </div>
                 ) : (

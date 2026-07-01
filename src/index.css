@@ -1996,6 +1996,16 @@ body {
 }
 
 @media (max-width: 767px) {
+  /*
+   * Mobile Safari often defers CSS animations (low power, compositor).
+   * fill-mode:both left every .section-animate at opacity:0 — blank page.
+   * Keep the rise animation but never hide content before it runs.
+   */
+  .section-animate {
+    animation: section-rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    opacity: 1;
+  }
+
   .section-label { letter-spacing: 0.2em; font-size: 0.75rem; }
 
   .section-padding {
@@ -2173,4 +2183,248 @@ body {
   .mobile-collapsible-toggle {
     display: none !important;
   }
+}
+
+/* ── Course page ── */
+.course-gallery {
+  display: grid;
+  gap: 1.25rem;
+  margin-top: -1rem;
+}
+
+@media (min-width: 768px) {
+  .course-gallery {
+    grid-template-columns: 1.35fr 1fr;
+    gap: 1.5rem;
+    align-items: stretch;
+  }
+}
+
+.course-gallery-grid {
+  display: grid;
+  gap: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .course-gallery-grid {
+    gap: 1.5rem;
+  }
+}
+
+.course-gallery-frame {
+  position: relative;
+  overflow: hidden;
+  padding: 0.5rem;
+  border: 2px solid rgba(196, 160, 98, 0.4);
+  background: linear-gradient(160deg, var(--color-ivory) 0%, var(--color-cream) 100%);
+  box-shadow: 0 12px 40px rgba(107, 79, 46, 0.12);
+}
+
+.course-gallery-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  aspect-ratio: 4 / 3;
+}
+
+.course-gallery-featured .course-gallery-img {
+  aspect-ratio: 16 / 11;
+}
+
+@media (min-width: 768px) {
+  .course-gallery-featured .course-gallery-img {
+    min-height: 100%;
+    aspect-ratio: auto;
+  }
+}
+
+.course-gallery-shimmer {
+  position: absolute;
+  inset: 0.5rem;
+  pointer-events: none;
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    rgba(255, 252, 245, 0.12) 50%,
+    transparent 60%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.course-gallery-frame:hover .course-gallery-shimmer {
+  opacity: 1;
+}
+
+.course-technique-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1.75rem 1.25rem;
+  border: 1px solid rgba(168, 135, 74, 0.3);
+  background: linear-gradient(160deg, var(--color-ivory) 0%, var(--color-cream) 100%);
+  box-shadow: 0 8px 28px rgba(107, 79, 46, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.course-technique-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(196, 160, 98, 0.5);
+  box-shadow: 0 12px 36px rgba(107, 79, 46, 0.12);
+}
+
+.course-technique-icon {
+  font-size: 1.25rem;
+  color: var(--color-gold-rich);
+  text-shadow: 0 0 16px rgba(196, 160, 98, 0.4);
+}
+
+.course-topic-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.875rem;
+  padding: 1.125rem 1.25rem;
+  border: 1px solid rgba(168, 135, 74, 0.25);
+  background: linear-gradient(160deg, rgba(255, 252, 245, 0.95) 0%, var(--color-cream) 100%);
+  box-shadow: 0 4px 20px rgba(107, 79, 46, 0.06);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.course-topic-item:hover {
+  border-color: rgba(196, 160, 98, 0.45);
+  box-shadow: 0 8px 28px rgba(107, 79, 46, 0.1);
+}
+
+.course-topic-icon {
+  flex-shrink: 0;
+  margin-top: 0.125rem;
+  font-size: 0.75rem;
+  color: var(--color-gold-rich);
+}
+
+.course-pricing-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.course-pricing-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.875rem 0;
+  border-bottom: 1px solid rgba(168, 135, 74, 0.2);
+}
+
+.course-pricing-row:last-child {
+  border-bottom: none;
+}
+
+.course-pricing-row-note {
+  display: block;
+}
+
+.course-pricing-label {
+  font-size: 0.9375rem;
+  color: var(--color-text-muted);
+}
+
+.course-pricing-value {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--color-gold-rich);
+  text-align: right;
+  white-space: nowrap;
+}
+
+.course-pricing-note {
+  font-size: 0.9375rem;
+  color: var(--color-text-primary);
+  padding-left: 1rem;
+  position: relative;
+}
+
+.course-pricing-note::before {
+  content: '✦';
+  position: absolute;
+  left: 0;
+  top: 0.1rem;
+  font-size: 0.625rem;
+  color: var(--color-gold-rich);
+}
+
+.course-pricing-card-featured {
+  border-color: rgba(196, 160, 98, 0.45);
+}
+
+/* ── Mobile course promo (homepage) ── */
+.mobile-course-promo {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+
+.mobile-course-promo-card {
+  position: relative;
+  overflow: hidden;
+  max-width: 28rem;
+  margin: 0 auto;
+  min-height: 18rem;
+  border: 1px solid rgba(196, 160, 98, 0.35);
+  box-shadow: 0 12px 40px rgba(42, 28, 14, 0.22);
+}
+
+.mobile-course-promo-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center 30%;
+  transform: scale(1.02);
+  transition: transform 6s ease;
+}
+
+.mobile-course-promo-card:hover .mobile-course-promo-bg {
+  transform: scale(1.06);
+}
+
+.mobile-course-promo-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(28, 20, 12, 0.35) 0%, rgba(28, 20, 12, 0.72) 45%, rgba(18, 12, 8, 0.92) 100%),
+    linear-gradient(135deg, rgba(107, 79, 46, 0.25) 0%, transparent 55%);
+  pointer-events: none;
+}
+
+.mobile-course-promo-shimmer {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 42%,
+    rgba(196, 160, 98, 0.08) 50%,
+    transparent 58%
+  );
+  background-size: 200% 100%;
+  animation: mobile-promo-shimmer 8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes mobile-promo-shimmer {
+  0%, 100% { background-position: 200% 0; opacity: 0.4; }
+  50% { background-position: -200% 0; opacity: 0.85; }
+}
+
+.mobile-course-promo-content {
+  position: relative;
+  z-index: 1;
+  padding: 1.25rem 1.125rem 1.375rem;
+}
+
+.mobile-course-promo-content .btn-primary {
+  font-size: 0.8125rem;
+  padding: 0.75rem 1.25rem;
 }

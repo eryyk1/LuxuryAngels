@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import MobileCollapsible from './MobileCollapsible'
 
-function GalleryPair({ beforeImage, afterImage, featured = false }) {
+function GalleryPair({ beforeImage, afterImage, beforeAlt, afterAlt, featured = false }) {
   return (
     <article className={`ba-pair group section-animate ${featured ? 'ba-pair-featured' : ''}`}>
       <div className="ba-pair-grid">
@@ -9,9 +9,10 @@ function GalleryPair({ beforeImage, afterImage, featured = false }) {
           <span className="ba-pair-label">Előtte</span>
           <img
             src={beforeImage}
-            alt="Előtte"
+            alt={beforeAlt}
             className="ba-pair-img"
             loading="lazy"
+            decoding="async"
           />
           <div className="ba-pair-shimmer" aria-hidden="true" />
         </div>
@@ -20,9 +21,10 @@ function GalleryPair({ beforeImage, afterImage, featured = false }) {
           <span className="ba-pair-label">Utána</span>
           <img
             src={afterImage}
-            alt="Utána"
+            alt={afterAlt}
             className="ba-pair-img"
             loading="lazy"
+            decoding="async"
           />
           <div className="ba-pair-shimmer" aria-hidden="true" />
         </div>
@@ -40,6 +42,8 @@ export default function BeforeAfterGallery({ items }) {
         <GalleryPair
           beforeImage={featured.beforeImage}
           afterImage={featured.afterImage}
+          beforeAlt={featured.beforeAlt}
+          afterAlt={featured.afterAlt}
           featured
         />
       )}
@@ -51,6 +55,8 @@ export default function BeforeAfterGallery({ items }) {
                 key={item.id}
                 beforeImage={item.beforeImage}
                 afterImage={item.afterImage}
+                beforeAlt={item.beforeAlt}
+                afterAlt={item.afterAlt}
               />
             ))}
           </div>

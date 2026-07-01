@@ -12,7 +12,10 @@ import AboutPortrait from '../components/AboutPortrait'
 import ImagePlaceholder from '../components/ImagePlaceholder'
 import MobileCollapsible from '../components/MobileCollapsible'
 import PremiumBooking from '../components/PremiumBooking'
+import MobileCoursePromo from '../components/MobileCoursePromo'
 import AppointmentForm from '../components/AppointmentForm'
+import PageMeta from '../components/PageMeta'
+import { DEFAULT_SEO } from '../data/seo'
 
 function SectionOrnament() {
   return (
@@ -25,6 +28,12 @@ function SectionOrnament() {
 export default function HomePage() {
   return (
     <>
+      <PageMeta
+        title={DEFAULT_SEO.title}
+        description={DEFAULT_SEO.description}
+        path={DEFAULT_SEO.path}
+      />
+
       {/* ── Hero ── */}
       <section className="hero-gold relative min-h-[75svh] md:min-h-[90svh] lg:min-h-[92svh] flex items-center pt-[5.25rem] overflow-hidden">
         <div className="hero-shimmer" aria-hidden="true" />
@@ -308,6 +317,8 @@ export default function HomePage() {
 
       {/* ── Premium Booking Experience ── */}
       <PremiumBooking />
+
+      <MobileCoursePromo />
 
       {/* ── Contact ── */}
       <section id="kapcsolat" className="section-padding contact-section px-4 sm:px-6 section-animate">

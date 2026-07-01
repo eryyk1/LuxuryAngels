@@ -1,6 +1,8 @@
 import logoPng from '../assets/logo.png'
 import { SALON_NAME } from '../data/content'
 
+const LOGO_ALT = `${SALON_NAME} logó — hajhosszabbítás és fodrász Budapest XVIII. kerület`
+
 const logoMaskStyle = { '--logo-mask': `url(${logoPng})` }
 
 function LogoSparkles() {
@@ -25,10 +27,13 @@ export default function Logo({ variant = 'header', className = '' }) {
             <div className="logo-hero-spotlight" aria-hidden="true" />
             <img
               src={logoPng}
-              alt={SALON_NAME}
+              alt={LOGO_ALT}
               className="logo-hero-img"
               width={1024}
               height={719}
+              fetchPriority="high"
+              loading="eager"
+              decoding="async"
               draggable={false}
             />
             <div className="logo-shine logo-shine-hero" aria-hidden="true" />
@@ -45,10 +50,12 @@ export default function Logo({ variant = 'header', className = '' }) {
         <div className="logo-footer-stage">
           <img
             src={logoPng}
-            alt={SALON_NAME}
+            alt={LOGO_ALT}
             className="logo-footer-img"
             width={1024}
             height={719}
+            loading="lazy"
+            decoding="async"
             draggable={false}
           />
           <div className="logo-shine logo-shine-footer" aria-hidden="true" />
@@ -61,10 +68,12 @@ export default function Logo({ variant = 'header', className = '' }) {
     <div className={`logo-header ${className}`} style={logoMaskStyle}>
       <img
         src={logoPng}
-        alt={SALON_NAME}
+        alt={LOGO_ALT}
         className="logo-header-img"
         width={1024}
         height={719}
+        loading="eager"
+        decoding="async"
         draggable={false}
       />
     </div>

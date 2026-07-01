@@ -6,7 +6,7 @@ export default function PageHero({ label, title, description }) {
     <section className="page-hero pt-24 md:pt-32 pb-12 md:pb-20 px-6 relative overflow-hidden">
       <div className="hero-shimmer" aria-hidden="true" />
       <div className="relative z-10 max-w-3xl mx-auto text-center">
-        <SectionHeader label={label} title={title} light />
+        <SectionHeader label={label} title={title} light as="h1" />
         {description && (
           <p className="text-pearl/95 text-base md:text-lg leading-relaxed tracking-wide max-w-xl mx-auto -mt-6">
             {description}

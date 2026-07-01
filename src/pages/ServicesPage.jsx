@@ -1,11 +1,27 @@
 import { Link } from 'react-router-dom'
 import { SERVICES, PRODUCTS_UI_ENABLED } from '../data/content'
+import { PAGE_SEO, buildBreadcrumbSchema } from '../data/seo'
 import PageHero, { BookingCTA } from '../components/PageHero'
+import PageMeta from '../components/PageMeta'
 import { ServiceCardLink } from '../components/GalleryShowcase'
 
 export default function ServicesPage() {
+  const seo = PAGE_SEO.services
+
   return (
     <>
+      <PageMeta
+        title={seo.title}
+        description={seo.description}
+        path={seo.path}
+        jsonLd={[
+          buildBreadcrumbSchema([
+            { name: 'Főoldal', path: '/' },
+            { name: 'Szolgáltatások', path: '/szolgaltatasok' },
+          ]),
+        ]}
+      />
+
       <PageHero
         label="Amit kínálok"
         title="Szolgáltatások"

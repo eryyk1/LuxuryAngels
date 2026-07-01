@@ -1,10 +1,20 @@
 import { Link } from 'react-router-dom'
 import { SERVICES } from '../data/content'
+import { PAGE_SEO } from '../data/seo'
 import PageHero from '../components/PageHero'
+import PageMeta from '../components/PageMeta'
 
 export default function ServiceNotFound() {
+  const seo = PAGE_SEO.notFound
+
   return (
     <>
+      <PageMeta
+        title={seo.title}
+        description={seo.description}
+        noindex={seo.noindex}
+      />
+
       <PageHero
         label="Szolgáltatás"
         title="A keresett szolgáltatás nem található"
